@@ -31,6 +31,28 @@ for date, duration_hours in records:
     dates.append(date)
     cumulative_hours.append(total_hours)
 
+total_hours = 0
+
+#loop that allows you to set a country value and the total cumulative EVA hours for that country will be printed to the terminal
+#Pretty clunky to be hardcoding the country value, implementation should be improved
+#hours + minutes -> hours conversion is also duplicated from lines 18-19, could probably be moved into its own function
+for eva in eva_data:
+        
+        duration_text = eva.get("duration")
+        if not duration_text:
+            continue
+
+        if eva.get("country") == "Russia":
+            hours, minutes = map(int, duration_text.split(":"))
+            duration_hours = hours + minutes / 60
+            total_hours += duration_hours
+
+            
+
+print(f"Total EVA hours for selected country is: {total_hours}")
+    
+    
+
 plt.plot(dates, cumulative_hours)
 plt.xlabel("Year")
 plt.ylabel("Cumulative EVA duration (hours)")
